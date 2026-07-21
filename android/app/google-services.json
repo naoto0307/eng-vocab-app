@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1080324077531",
+    "project_id": "eng-vocab-app-472c4",
+    "storage_bucket": "eng-vocab-app-472c4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080324077531:android:8a0e379baf6a5823c419fe",
+        "android_client_info": {
+          "package_name": "com.example.eng_vocab_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080324077531-25mdb68stlber57k5rg98bapa6pljd9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eng_vocab_app",
+            "certificate_hash": "f3c14a8d861a54596fd9f8519d2fb350d9db9a38"
+          }
+        },
+        {
+          "client_id": "1080324077531-mna8j9ocp2ptc6guk14abfatc5obu4gv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbEOa1ObXrTYGrK7E-miHk72DMsTawfcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080324077531-mna8j9ocp2ptc6guk14abfatc5obu4gv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
