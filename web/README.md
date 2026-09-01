@@ -10,12 +10,13 @@ Web版を先に完成させ、そのあとモバイル版（Flutter, リポジ�
 - 単語帳一覧（検索・ステータスフィルタ、空状態）
 - 単語詳細・編集（ステータス変更、削除、未保存離脱の確認モーダル）
 - 単語追加（手動入力・自動生成プレビュー）
+- **マーカースキャン**（画像・PDFアップロード → HSV色検出でマーカー領域抽出 → Tesseract.js(OCR) → 候補内重複集約 → 辞書照合による要確認判定 → 重複チェック → 設定に応じてプレビュー確認 or 即登録）。検出アルゴリズムは`lib/core/vision/marker_detector.dart`を移植したもの
 - 学習範囲選択（間違えた単語のみ／期間／タグのAND絞り込み）
 - フラッシュカード学習（表裏切替、キーボードショートカット `←`/`→`/`Space`、undo、2段階削除確認、セッション終了サマリー）
 - 学習記録（月表示ヒートマップカレンダー、連続学習日数）
-- 設定（判定方向反転など）
+- 設定（判定方向反転、スキャン確認スキップ）
 
-マーカースキャン（OCR）・DeepL翻訳・Unsplash画像・クラウド同期はAPIキーや追加インフラが必要なため未実装です。単語の自動生成は [Free Dictionary API](https://dictionaryapi.dev/)（無料・キー不要）による英語の定義・例文・類語の取得のみ対応しています。
+DeepL翻訳・Unsplash画像・クラウド同期はAPIキーや追加インフラが必要なため未実装です。単語の自動生成は [Free Dictionary API](https://dictionaryapi.dev/)（無料・キー不要）による英語の定義・例文・類語の取得のみ対応しています。
 
 ## 技術構成
 
@@ -23,6 +24,9 @@ Web版を先に完成させ、そのあとモバイル版（Flutter, リポジ�
 - ローカルDB: Dexie（IndexedDB） — `Word` / `StudySession` / `StudyLog` はCLAUDE.mdのスキーマに準拠
 - ルーティング: react-router-dom
 - スタイル: 素のCSS（`src/styles/`）。oklchカラートークンとライト/ダーク対応はデザイン案からそのまま移植
+- OCR: Tesseract.js（クライアントサイド・初回利用時にモデルをCDNからダウンロード）
+- PDF処理: pdfjs-dist（ページを画像化してからマーカー検出）
+- マーカースキャン画面は`React.lazy`で遅延読み込みし、OCR/PDFライブラリが未使用時のバンドルサイズに影響しないようにしています
 
 ## セットアップ
 
@@ -35,7 +39,10 @@ npm run dev
 ## ビルド・テスト
 
 ```bash
-npm run build   # 型チェック + 本番ビルド
-npm run lint    # oxlint
-node smoke-test.mjs  # Playwrightでの一連の画面遷移スモークテスト（要 npx playwright install 相当のChromiumバイナリ）
+npm run build          # 型チェック + 本番ビルド
+npm run lint            # oxlint
+node smoke-test.mjs      # 画面遷移全体のスモークテスト（Playwright、要Chromiumバイナリ）
+node smoke-test-scan.mjs # マーカースキャン単体のスモークテスト（合成画像でマーカー検出の動作を確認）
 ```
+
+マーカースキャンのOCR（Tesseract.js）は初回利用時にモデルファイルをCDNからダウンロードするため、インターネット接続がない環境ではOCRの結果を得られません（マーカー領域の検出自体はオフラインで完結します）。

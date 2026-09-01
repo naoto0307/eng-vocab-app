@@ -19,15 +19,10 @@ export function SettingsScreen() {
         </Row>
         <Row
           title="スキャン確認をスキップ"
-          description="ONにすると、スキャンした単語をプレビューなしで即登録します（スキャン機能は準備中です）"
+          description="ONにすると、スキャンした単語をプレビューなしで即登録します"
           borderTop
         >
-          <button
-            className={`toggle${skipScanPreview ? ' on' : ''}`}
-            onClick={() => setSkipScanPreview(!skipScanPreview)}
-            disabled
-            style={{ opacity: 0.5, cursor: 'not-allowed' }}
-          >
+          <button className={`toggle${skipScanPreview ? ' on' : ''}`} onClick={() => setSkipScanPreview(!skipScanPreview)}>
             <div className="dot" />
           </button>
         </Row>

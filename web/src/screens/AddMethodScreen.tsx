@@ -37,7 +37,7 @@ export function AddMethodScreen() {
             icon={<CameraIcon size={28} />}
             title="マーカースキャンで追加"
             description="マーカーを引いた参考書のページやPDFをアップロード。単語をまとめて検出して一括登録します。"
-            disabled
+            onClick={() => navigate('/add/scan')}
           />
         </div>
       </div>
